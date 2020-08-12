@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 import './App.css';
-import { CardList } from './components/cardList';
+import { CardList } from './components/CardList';
+import SearchBox from './components/SearchBox';
 
 class App extends Component {
   constructor() {
     super();
 
     this.state = {
-      monsters: []
+      monsters: [],
+      searchField: ''
     };
   }
 
+  // Life cycle methods only for classes
   componentDidMount() {
     fetch('https://jsonplaceholder.typicode.com/users')
       .then(response => response.json())
@@ -18,14 +21,19 @@ class App extends Component {
   }
 
   render() {
+    const { monsters, searchField } = this.state;
+    const filteredMonsters = monsters.filter(monster => monster.name.toLowerCase().includes(searchField.toLowerCase()))
+
     return (
       <div className="App">
-        <CardList name={'monsters'}>
-          {
-            this.state.monsters.map(monster => <h1>{monster.name}</h1>)
-          }
-        </CardList>
+        <SearchBox
+          placeholder="Search Monsters"
+          handleChange={event => this.setState({ searchField: event.target.value })}
+        />
 
+        <CardList
+          monsters={filteredMonsters}
+        />
       </div>
     );
   }
