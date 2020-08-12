@@ -13,11 +13,17 @@ class App extends Component {
     };
   }
 
+
   // Life cycle methods only for classes
   componentDidMount() {
     fetch('https://jsonplaceholder.typicode.com/users')
       .then(response => response.json())
       .then(users => this.setState({ monsters: users }))
+  }
+
+  // (event) is from the input. The (this) keyword is created in the arrow function
+  handleChange = (event) => {
+    this.setState({ searchField: event.target.value })
   }
 
   render() {
@@ -26,9 +32,10 @@ class App extends Component {
 
     return (
       <div className="App">
+        <h1>Monster Rolodex</h1>
         <SearchBox
           placeholder="Search Monsters"
-          handleChange={event => this.setState({ searchField: event.target.value })}
+          handleChange={this.handleChange}
         />
 
         <CardList

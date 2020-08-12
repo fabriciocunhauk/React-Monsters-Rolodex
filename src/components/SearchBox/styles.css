@@ -1,5 +1,6 @@
 .search {
     -webkit-appearance: none;
+    border-radius: 28px;
     border: none;
     outline: none;
     padding: 10px;
